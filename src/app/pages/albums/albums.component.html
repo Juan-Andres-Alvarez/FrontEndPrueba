@@ -1,0 +1,110 @@
+<div>
+    <h3>Álbumes</h3>
+	<form class="example-form">
+		<mat-form-field class="example-full-width">
+			<mat-label>Nombre</mat-label>
+			<input [formControl]="myControl"
+				[matAutocomplete]="auto"
+				type="text"
+				placeholder="Nombre del usuario"
+				aria-label="Nombre"
+				matInput>
+			<mat-autocomplete #auto="matAutocomplete"
+				(optionSelected)="onOptionSelected($event)"
+				autoActiveFirstOption>
+				<mat-option *ngFor="let option of filteredOptions | async; trackBy: trackById"
+					[value]="option.name">
+					{{ option.name }}
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+	</form>
+    @if(albums.length > 0){
+        <div>
+            <div style="margin-bottom: 15px;">
+                <b>Listado de Álbumes de:</b>
+                <div>
+                    <span>{{ this.myControl.value }}</span>
+                </div>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Filter</mat-label>
+                    <input #input
+                        (keyup)="applyFilter($event)"
+                        matInput
+                        placeholder="Detalles">
+                </mat-form-field>
+        
+                <div class="mat-elevation-z8">
+                    <table [dataSource]="dataSource"
+                        mat-table
+                        matSort>
+        
+                        <!-- userId Column -->
+                        <ng-container matColumnDef="userId">
+                            <th *matHeaderCellDef
+                                mat-header-cell
+                                mat-sort-header>
+                                userId
+                            </th>
+                            <td *matCellDef="let row"
+                                mat-cell>
+                                {{row.userId}}
+                            </td>
+                        </ng-container>
+        
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="id">
+                            <th *matHeaderCellDef
+                                mat-header-cell
+                                mat-sort-header>
+                                ID
+                            </th>
+                            <td *matCellDef="let row"
+                                mat-cell>
+                                {{row.id}}
+                            </td>
+                        </ng-container>
+        
+                        <!-- Title Column -->
+                        <ng-container matColumnDef="title">
+                            <th *matHeaderCellDef
+                                mat-header-cell
+                                mat-sort-header>
+                                Title
+                            </th>
+                            <td *matCellDef="let row"
+                                mat-cell>
+                                {{row.title}}
+                            </td>
+                        </ng-container>
+        
+                        <tbody>
+                            <tr *matHeaderRowDef="displayedColumns"
+                                mat-header-row></tr>
+                            <tr *matRowDef="let row; columns: displayedColumns;"
+                                mat-row></tr>
+        
+                            <!-- Row shown when there is no matching data. -->
+                            <tr *matNoDataRow
+                                class="mat-row">
+                                <td class="mat-cell"
+                                    colspan="9" style="text-align: center;">
+                                    @if (input.value) {
+                                        No se encontraron usuarios con el filtro: "{{input.value}}"
+                                    } @else {
+                                        No se encontraron usuarios
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+        
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                        aria-label="Select page of users"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    }
+</div>

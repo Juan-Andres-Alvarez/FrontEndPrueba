@@ -1,0 +1,162 @@
+<div>
+	<h3>Home</h3>
+    <div>
+        <p>Listado de usuarios</p>
+    </div>
+	<div>
+		<mat-form-field>
+			<mat-label>Filter</mat-label>
+			<input #input
+				(keyup)="applyFilter($event)"
+				matInput
+				placeholder="Detalles">
+		</mat-form-field>
+
+		<div class="mat-elevation-z8">
+			<table [dataSource]="dataSource"
+				mat-table
+				matSort>
+
+				<!-- ID Column -->
+				<ng-container matColumnDef="id">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						ID
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.id}}
+					</td>
+				</ng-container>
+
+				<!-- Nombre Column -->
+				<ng-container matColumnDef="name">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Nombre
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.name}}
+					</td>
+				</ng-container>
+
+				<!-- Username Column -->
+				<ng-container matColumnDef="username">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Username
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.username}}
+					</td>
+				</ng-container>
+
+				<!-- Email Column -->
+				<ng-container matColumnDef="email">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Email
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.email}}
+					</td>
+				</ng-container>
+
+				<!-- Address Column -->
+				<ng-container matColumnDef="address">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Dirección
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						<button mat-raised-button (click)="openModal('address',row.address)">Ver</button>
+					</td>
+				</ng-container>
+
+				<!-- Phone Column -->
+				<ng-container matColumnDef="phone">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Número
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.phone}}
+					</td>
+				</ng-container>
+
+				<!-- Website Column -->
+				<ng-container matColumnDef="website">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Website
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.website}}
+					</td>
+				</ng-container>
+
+				<!-- Company Column -->
+				<ng-container matColumnDef="company">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Company
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						<button mat-raised-button (click)="openModal('company',row.company)">Ver</button>
+					</td>
+				</ng-container>
+
+				<!-- Posts Column -->
+				<ng-container matColumnDef="posts">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Posts
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+                        <button mat-raised-button (click)="openModal('posts',row.id)">Ver</button>
+					</td>
+				</ng-container>
+
+				<tbody>
+					<tr *matHeaderRowDef="displayedColumns"
+						mat-header-row></tr>
+					<tr *matRowDef="let row; columns: displayedColumns;"
+						mat-row></tr>
+
+					<!-- Row shown when there is no matching data. -->
+					<tr *matNoDataRow
+						class="mat-row">
+						<td class="mat-cell"
+							colspan="9" style="text-align: center;">
+                            @if (input.value) {
+                                No se encontraron usuarios con el filtro: "{{input.value}}"
+                            } @else {
+                                No se encontraron usuarios
+                            }
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+				aria-label="Select page of users"></mat-paginator>
+		</div>
+	</div>
+</div>

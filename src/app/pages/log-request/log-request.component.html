@@ -1,0 +1,107 @@
+<div>
+	<h3>Peticiones</h3>
+    <div>
+        <p>Listado</p>
+    </div>
+	<div>
+		<mat-form-field>
+			<mat-label>Filter</mat-label>
+			<input #input
+				(keyup)="applyFilter($event)"
+				matInput
+				placeholder="Detalles">
+		</mat-form-field>
+
+		<div class="mat-elevation-z8">
+			<table [dataSource]="dataSource"
+				mat-table
+				matSort>
+
+				<!-- Date Column -->
+				<ng-container matColumnDef="date">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Date
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.date}}
+					</td>
+				</ng-container>
+
+				<!-- Method Column -->
+				<ng-container matColumnDef="method">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Method
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+						{{row.method}}
+					</td>
+				</ng-container>
+
+				<!-- responseData Column -->
+				<ng-container matColumnDef="responseData">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						ResponseData
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Respuesta</mat-label>
+                            <textarea matInput rows="10">
+                                {{row.responseData}}
+                            </textarea>
+                        </mat-form-field>
+					</td>
+				</ng-container>
+
+				<!-- Actions Column -->
+				<ng-container matColumnDef="actions">
+					<th *matHeaderCellDef
+						mat-header-cell
+						mat-sort-header>
+						Actions
+					</th>
+					<td *matCellDef="let row"
+						mat-cell>
+                        <button mat-raised-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-raised-button (click)="deleteItem(row.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+					</td>
+				</ng-container>
+
+				<tbody>
+					<tr *matHeaderRowDef="displayedColumns"
+						mat-header-row></tr>
+					<tr *matRowDef="let row; columns: displayedColumns;"
+						mat-row></tr>
+
+					<!-- Row shown when there is no matching data. -->
+					<tr *matNoDataRow
+						class="mat-row">
+						<td class="mat-cell"
+							colspan="3" style="text-align: center;">
+                            @if (input.value) {
+                                No se encontraron peticiones con el filtro: "{{input.value}}"
+                            } @else {
+                                No se encontraron peticiones
+                            }
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+				aria-label="Select page of users"></mat-paginator>
+		</div>
+	</div>
+</div>

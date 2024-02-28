@@ -1,0 +1,27 @@
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+mat-sidenav {
+    min-width: 120px;
+    padding: 0 15px;
+
+    mat-list-item:not(.underline) {
+        text-align: center;
+        cursor: pointer !important;
+    }
+    .underline {
+        border-bottom: 1px solid gray;
+    }
+}
+
+.main {
+    padding: 1rem;
+    @media (min-width: 768px) {
+        padding: 3rem;
+    }
+}
